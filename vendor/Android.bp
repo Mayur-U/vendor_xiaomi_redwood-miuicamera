@@ -85,7 +85,7 @@ genrule {
 android_app_import {
 	name: "MiuiCamera",
 	owner: "xiaomi/redwood-miuicamera",
-	apk: "merge_MiuiCamera",
+	apk: ":merge_MiuiCamera",
 	overrides: ["Aperture", "Camera", "Camera2", "GoogleCameraGo"],
 	certificate: "platform",
 	dex_preopt: {
