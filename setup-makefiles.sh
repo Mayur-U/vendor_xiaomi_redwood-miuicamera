@@ -57,8 +57,18 @@ setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}"
 
 # Warning headers and guards
 write_headers
-
 write_makefiles "${MY_DIR}/proprietary-files.txt"
+sed -i '0,/android_app_import {/s//genrule {\
+	name: "merge_MiuiCamera",\
+	srcs: [\
+		"proprietary\/system\/priv-app\/MiuiCamera\/MiuiCamera.apk.part*",\
+	],\
+	out: ["proprietary\/system\/priv-app\/MiuiCamera\/MiuiCamera.apk"],\
+	cmd: "cat $(in) > $(out)",\
+}\
+\
+&/' "${ANDROIDBP}"
+sed -i 's|apk: "proprietary/system/priv-app/MiuiCamera/MiuiCamera.apk",|apk: ":merge_MiuiCamera",|' "${ANDROIDBP}"
 
 # Finish
 write_footers
